@@ -7,9 +7,7 @@
 	"name": "d1learning",
 	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_date": "2026-10-06",
-	"compatibility_flags": [
-		"nodejs_als"
-	],
+	"compatibility_flags": ["nodejs_als"],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"
@@ -17,7 +15,16 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "d1learning-db",
+			"database_id": "ecf48963-e227-466d-9582-a3c5fe1560a0",
+			"remote": true,
+			"migrations_dir": "./drizzle"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -42,3 +49,4 @@
 	 */
 	// "services": [  {   "binding": "MY_SERVICE",   "service": "my-service"  } ]
 }
+

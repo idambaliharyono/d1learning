@@ -42,10 +42,13 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
     "vite": "^8.3.0",
-    "wrangler": "^4.149.0"
+    "wrangler": "^4.151.0"
   },
   "imports": {
     "#lib": "./src/lib/index.js",
     "#lib/*": "./src/lib/*"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.7"
   }
 }

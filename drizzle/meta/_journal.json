@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791988330534,
+      "tag": "0000_living_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792000272202,
+      "tag": "0001_typical_venom",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792000359056,
+      "tag": "0002_adorable_nicolaos",
+      "breakpoints": true
+    }
+  ]
+}
