@@ -24,7 +24,7 @@
 			"remote": true,
 			"migrations_dir": "./drizzle"
 		}
-	]
+	],
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -42,11 +42,15 @@
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
+	"vars": {
+		"BETTER_AUTH_URL": "https://d1learning.idambaliharyono01.workers.dev",
+		"GOOGLE_CLIENT_ID": "187877480465-iaupms575kdvuekc3qok57dbmcdr9v3a.apps.googleusercontent.com",
+		"CLOUDFLARE_ACCOUNT_ID": "d26b9186a23924d4852a0946098e50a9",
+		"CLOUDFLARE_DATABASE_ID": "ecf48963-e227-466d-9582-a3c5fe1560a0"
+	}
 	/**
 	 * Service Bindings (communicate between multiple Workers)
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
 	 */
 	// "services": [  {   "binding": "MY_SERVICE",   "service": "my-service"  } ]
 }
-
