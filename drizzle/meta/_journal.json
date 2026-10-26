@@ -36,6 +36,20 @@
       "when": 1792397688769,
       "tag": "0004_orange_arclight",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1792746846106,
+      "tag": "0005_medical_kinsey_walden",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1793007590687,
+      "tag": "0006_sticky_meltdown",
+      "breakpoints": true
     }
   ]
 }

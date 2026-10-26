@@ -27,6 +27,10 @@ SvelteKit app using Cloudflare D1 (database `d1learning-db`, binding `DB`) with 
 
 ---
 
+## 2026-10-26
+
+migration is pain,
+
 ## 2026-10-20
 
 ## What was built
@@ -135,7 +139,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 **Google Console:** redirect URI `http://localhost:5173/api/auth/callback/google` (exact match, `http`, no trailing slash). In Testing mode, add your account under Test users.
 
-## Schema and migration workflow
+**Schema and migration workflow**
 
 1. Change `auth.cli.ts` only if you add schema-affecting plugins, then run:
    `npx auth generate --config src/lib/server/auth.cli.ts --output src/lib/server/db/auth.schema.ts`
