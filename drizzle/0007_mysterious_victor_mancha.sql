@@ -1,0 +1,2 @@
+DROP VIEW `exercise_with_author`;--> statement-breakpoint
+CREATE VIEW `exercise_with_author` AS select "exercise"."id", "exercise"."name", "user"."name" from "exercise" left join "user" on "user"."id" = "exercise"."user_id";

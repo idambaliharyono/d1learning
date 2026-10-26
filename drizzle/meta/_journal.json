@@ -50,6 +50,34 @@
       "when": 1793007590687,
       "tag": "0006_sticky_meltdown",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1793009432792,
+      "tag": "0007_mysterious_victor_mancha",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1793009813329,
+      "tag": "0008_broken_randall",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1793028979966,
+      "tag": "0009_odd_micromax",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1793050658423,
+      "tag": "0010_exotic_nemesis",
+      "breakpoints": true
     }
   ]
 }

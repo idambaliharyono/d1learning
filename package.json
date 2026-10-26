@@ -15,9 +15,10 @@
 		"gen": "wrangler types",
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate:prod": "drizzle-kit migrate",
+		"db:migrate:remote": "drizzle-kit migrate",
 		"db:migrate:local": "wrangler d1 migrations apply DB --local --config wrangler.jsonc",
-		"db:studio": "drizzle-kit studio",
+		"db:studio:remote": "drizzle-kit studio",
+		"db:studio:local": "drizzle-kit studio --config=drizzle.local.config.ts",
 		"deploy": "npm run build && wrangler deploy",
 		"cf-typegen": "wrangler types ./src/worker-configuration.d.ts"
 	},

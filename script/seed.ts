@@ -7,7 +7,7 @@ async function main() {
 	const { env, dispose } = await getPlatformProxy({ remoteBindings: false });
 	const db = getDb(env.DB as D1Database);
 
-	const coachId = 'D0PY3ppciBE4DbwIL71GCFJLNqeTuFQd';
+	const coachId = 'gGMYeUuvbJVyEvqFHNxJ5GwErbCUZjsz';
 
 	const id = () => crypto.randomUUID();
 	const daysAgo = (n: number) => new Date(Date.now() - n * 86_400_000);
@@ -27,7 +27,7 @@ async function main() {
 	await db.batch([
 		db.delete(s.sessionSets),
 		db.delete(s.sessionExercise),
-		db.delete(s.session),
+		db.delete(s.workoutSession),
 		db.delete(s.routineExercise),
 		db.delete(s.routine),
 		db.delete(s.clientNote),
@@ -41,9 +41,24 @@ async function main() {
 		]),
 
 		db.insert(s.exercise).values([
-			{ id: bench, name: 'Bench Press', userId: coachId },
-			{ id: squat, name: 'Squat', userId: coachId },
-			{ id: row, name: 'Barbell Row', userId: coachId }
+			{
+				id: bench,
+				name: 'Bench Press',
+				userId: coachId,
+				youtubeUrl: 'https://www.youtube.com/watch?v=HvOtOk_zqJ4'
+			},
+			{
+				id: squat,
+				name: 'Squat',
+				userId: coachId,
+				youtubeUrl: 'https://youtu.be/XLTyLWgkQd0?si=ujb3S3JeHNDvkw8z'
+			},
+			{
+				id: row,
+				name: 'Barbell Row',
+				userId: coachId,
+				youtubeUrl: 'https://youtu.be/XLTyLWgkQd0?si=ujb3S3JeHNDvkw8z'
+			}
 		]),
 
 		db.insert(s.workoutSession).values([

@@ -9,7 +9,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) redirect(303, '/login');
 	const db = getDb(env.DB);
 
-	const exercises = (async () => db.select().from(s.exercise).orderBy(asc(s.exercise.name)))();
+	const exercisesWithAuthor = (async () =>
+		db.select().from(s.exerciseWithAuthor).orderBy(asc(s.exerciseWithAuthor.name)))();
 
-	return { exercises };
+	return { exercisesWithAuthor };
 };
