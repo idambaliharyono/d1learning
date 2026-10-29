@@ -1,2 +1,0 @@
-DROP TABLE `exercise`;--> statement-breakpoint
-CREATE VIEW `exercise_with_author` AS select "exercise"."id", "exercise"."user_id", "exercise"."name", "exercise"."instruction", "exercise"."youtube_url", "exercise"."note", "exercise"."created_at", "exercise"."updated_at", "exercise"."deleted", "user"."id", "user"."name", "user"."email", "user"."email_verified", "user"."image", "user"."created_at", "user"."updated_at" from "exercise" left join "user" on "user"."id" = "exercise"."user_id";

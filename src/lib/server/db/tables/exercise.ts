@@ -10,11 +10,24 @@ export const exercise = sqliteTable('exercise', {
 		.notNull()
 		.references(() => user.id),
 	name: text('name').notNull(),
-	instruction: text('instruction'),
 	youtubeUrl: text('youtube_url'),
-	note: text('note'),
+	instructions: text('instructions', { mode: 'json' }).$type<string[]>(),
 	...timestamps
 });
 
 export type Exercise = typeof exercise.$inferSelect;
-export type newExercise = typeof exercise.$inferInsert;
+export type NewExercise = typeof exercise.$inferInsert;
+
+// export const exerciseNote = sqliteTable('exercise_not', {
+// 	id: text('id')
+// 		.primaryKey()
+// 		.$defaultFn(() => crypto.randomUUID()),
+// 	exerciseId: text('exercise_id')
+// 		.notNull()
+// 		.references(() => exercise.id),
+// 	content: text('content'),
+// 	userid: text('user_id')
+// 		.notNull()
+// 		.references(() => user.id),
+// 	...timestamps
+// });

@@ -7,7 +7,7 @@ async function main() {
 	const { env, dispose } = await getPlatformProxy({ remoteBindings: false });
 	const db = getDb(env.DB as D1Database);
 
-	const coachId = 'gGMYeUuvbJVyEvqFHNxJ5GwErbCUZjsz';
+	const coachId = '7TIqYmU5kD2aWD0HKx4y9b7uhySedpzH';
 
 	const id = () => crypto.randomUUID();
 	const daysAgo = (n: number) => new Date(Date.now() - n * 86_400_000);

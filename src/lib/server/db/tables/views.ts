@@ -1,6 +1,6 @@
 import { sqliteView } from 'drizzle-orm/sqlite-core';
-import { exercise } from './exercise';
-import { user } from '../auth.schema';
+import { exercise } from './exercise.ts';
+import { user } from '../auth.schema.ts';
 import { eq, sql } from 'drizzle-orm';
 
 export const exerciseWithAuthor = sqliteView('exercise_with_author').as((qb) =>
@@ -10,7 +10,7 @@ export const exerciseWithAuthor = sqliteView('exercise_with_author').as((qb) =>
 			name: exercise.name,
 			author: sql<string | null>`${user.name}`.as('author'),
 			url: exercise.youtubeUrl,
-			instruction: exercise.instruction,
+			instructions: exercise.instructions,
 			createdAt: exercise.createdAt
 		})
 		.from(exercise)
