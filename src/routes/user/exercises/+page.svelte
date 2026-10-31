@@ -10,21 +10,62 @@
 
 	let { data, form }: PageProps = $props();
 	type Exercise = Awaited<PageProps['data']['exercisesWithAuthor']>[number];
+	let exercises = $state.raw<Exercise[] | null>(null);
+
+	$effect(() => {
+		exercises = null;
+		let stale = false;
+		const p = data.exercisesWithAuthor;
+		p.then((list) => {
+			if (!stale) exercises = list;
+		});
+		return () => (stale = true);
+	});
+
+	// search
 	let q = $state('');
+	const shown = $derived(
+		(exercises ?? []).filter((e) => e.name.toLowerCase().includes(q.trim().toLowerCase()))
+	);
+	// search
 
 	let open = $state(false);
 	let selected = $state<Exercise | null>(null);
+	let urlOverides = $state<Record<string, string>>({});
 
 	function show(e: Exercise) {
 		selected = e;
 		open = true;
 	}
-	const embed = $derived(youtuEmbedUrl(selected?.url));
+
+	const currentUrl = $derived(selected ? (urlOverides[selected.id] ?? selected.url) : null);
+	const embed = $derived(youtuEmbedUrl(currentUrl));
 	const steps = $derived(selected?.instructions);
+
+	// filter
+	const LETTERS = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+	const letterOf = (name: string) => {
+		const c = name.trim().charAt(0).toUpperCase();
+		return /[A-Z]/.test(c) ? c : '#';
+	};
+	const groups = $derived.by(() => {
+		const g: Record<string, Exercise[]> = {};
+		for (const e of shown) (g[letterOf(e.name)] ??= []).push(e);
+		return g;
+	});
+	function jump(letter: string) {
+		document.getElementById(`letter-${letter}`)?.scrollIntoView({ block: 'start' });
+	}
+
+	function scrub(e: PointerEvent) {
+		const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+		const letter = el?.dataset.letter;
+		if (letter && groups[letter]) jump(letter);
+	}
 </script>
 
-<div class="flex justify-between">
-	<div class="relative mx-auto w-3/4">
+<div class="mx-auto mb-2 flex justify-between px-2">
+	<div class="relative w-3/4">
 		<SearchIcon
 			class="pointer-events-none absolute top-1/2 left-2 -translate-y-1/2 text-sm text-muted-foreground"
 		/>
@@ -34,26 +75,48 @@
 		<Plus></Plus>
 	</div>
 </div>
-{#await data.exercisesWithAuthor}
+{#if exercises === null}
 	<div class="flex flex-col gap-5">
 		{#each Array(20)}
 			<Skeleton class="h-4 w-full"></Skeleton>
 		{/each}
 	</div>
-{:then exercises}
-	{@const shown = exercises.filter((e: Exercise) =>
-		e.name.toLowerCase().includes(q.trim().toLowerCase())
-	)}
-	<ul class="w-full">
-		{#each shown as e (e.id)}
-			<li class="text-left">
-				<button class="w-full" onclick={() => show(e)}>
-					{e.name}
-				</button>
-			</li>
+{:else}
+	<nav
+		class="leading none fixed top-1/2 right-1 z-20 flex -translate-y-1/2 touch-none flex-col items-center text-xs leading-none select-none"
+		onpointerdown={scrub}
+		onpointermove={(e) => e.buttons && scrub(e)}
+	>
+		{#each LETTERS as letter (letter)}
+			<button
+				type="button"
+				data-letter={letter}
+				disabled={!groups[letter]}
+				class="px-1.5 py-[3px] font-medium text-primary disabled:text-muted-foreground/40"
+			>
+				{letter}
+			</button>
 		{/each}
-	</ul>
-{/await}
+	</nav>
+	<div class="pr-6">
+		{#each LETTERS as letter (letter)}
+			{#if groups[letter]}
+				<section id="letter-{letter}" class="scroll -mt-2">
+					<h2>{letter}</h2>
+					<ul class="w-full">
+						{#each groups[letter] as e (e.id)}
+							<li>
+								<button class="w-full text-left" onclick={() => show(e)}>
+									{e.name}
+								</button>
+							</li>
+						{/each}
+					</ul>
+				</section>
+			{/if}
+		{/each}
+	</div>
+{/if}
 
 <Dialog.Root bind:open>
 	<Dialog.Content>
@@ -68,22 +131,34 @@
 			</div>
 		</Dialog.Title>
 		<div class="w-full">
-			{#if selected?.url}
+			{#if currentUrl}
 				<iframe src={embed} title={selected?.name} class="aspect-video w-full"> </iframe>
 			{:else}
 				<form
 					method="POST"
-					use:enhance={() =>
-						async ({ update }) => {
-							await update();
-						}}
+					action="?/setVideo"
+					use:enhance={({ formData }) => {
+						console.log('sending:', Object.fromEntries(formData));
+						const url = String(formData.get('url') ?? '').trim();
+						return async ({ result, update }) => {
+							if (result.type === 'success' && selected) {
+								urlOverides[selected.id] = url;
+							}
+							await update({ refreshAll: false });
+						};
+					}}
 				>
-					<Input type="url" placeholder="paste related youtube video url here!" />
-
-					{#if form?.error}<p>{form.error}</p>{/if}
-					<Button type="submit">
-						<Plus />
-					</Button>
+					<input type="hidden" name="id" value={selected?.id} />
+					<div class="mb-2">No video yet!</div>
+					<div class="relative w-full">
+						<Input type="url" name="url" placeholder="Youtube Url..." />
+						<Button type="submit" class="absolute top-1/2 right-0 -translate-y-1/2">
+							<Plus />
+						</Button>
+					</div>
+					{#if form?.error}
+						<p>{form.error}</p>
+					{/if}
 				</form>
 			{/if}
 		</div>
