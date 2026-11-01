@@ -6,6 +6,7 @@
 	import * as Dialog from '#lib/components/ui/dialog/index.ts';
 	import { Input } from '#lib/components/ui/input/index.ts';
 	import { Plus, SearchIcon } from '@lucide/svelte';
+	import Fuse from 'fuse.js';
 	import { enhance } from '$app/forms';
 
 	let { data, form }: PageProps = $props();
@@ -24,9 +25,19 @@
 
 	// search
 	let q = $state('');
-	const shown = $derived(
-		(exercises ?? []).filter((e) => e.name.toLowerCase().includes(q.trim().toLowerCase()))
+	const fuse = $derived(
+		new Fuse(exercises ?? [], {
+			keys: ['name'],
+			threshold: 0.2,
+			ignoreLocation: true
+		})
 	);
+
+	const shown = $derived.by(() => {
+		const term = q.trim();
+		if (!term) return exercises ?? [];
+		return fuse.search(term).map((r) => r.item);
+	});
 	// search
 
 	let open = $state(false);
@@ -98,11 +109,11 @@
 			</button>
 		{/each}
 	</nav>
-	<div class="pr-6">
+	<div class="pr-6 pl-1">
 		{#each LETTERS as letter (letter)}
 			{#if groups[letter]}
-				<section id="letter-{letter}" class="scroll -mt-2">
-					<h2>{letter}</h2>
+				<section id="letter-{letter}" class="scroll -mt-0.5">
+					<h2 class="text-lg font-bold">{letter}</h2>
 					<ul class="w-full">
 						{#each groups[letter] as e (e.id)}
 							<li>

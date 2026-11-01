@@ -10,10 +10,12 @@ export const client = sqliteTable('customer', {
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id),
+	photoKey: text('photo_key'),
+	photoDtype: text('photo_dtype'),
 	...timestamps
 });
 export type Client = typeof client.$inferSelect;
-export type newClient = typeof client.$inferInsert;
+export type NewClient = typeof client.$inferInsert;
 
 // -----------------------------------------------------------------------------------------
 export const clientNote = sqliteTable('client_note', {
