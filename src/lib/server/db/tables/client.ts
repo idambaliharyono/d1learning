@@ -2,14 +2,18 @@ import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { timestamps } from './shared.ts';
 import { user } from '../auth.schema.ts';
 
-export const client = sqliteTable('customer', {
+export const client = sqliteTable('client', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
 	name: text('name').notNull(),
+	fullName: text('full_name'),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id),
+	gender: text('gender', { enum: ['male', 'female'] }),
+	birthDate: text('birth_date'),
+	whatsapp: text('whatsapp'),
 	photoKey: text('photo_key'),
 	photoDtype: text('photo_dtype'),
 	...timestamps

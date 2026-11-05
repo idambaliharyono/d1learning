@@ -50,6 +50,20 @@
       "when": 1793562715228,
       "tag": "0006_wandering_serpent_society",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1793782543519,
+      "tag": "0007_late_strong_guy",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1793879572828,
+      "tag": "0008_serious_blazing_skull",
+      "breakpoints": true
     }
   ]
 }

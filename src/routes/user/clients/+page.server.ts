@@ -10,18 +10,19 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const userId = locals.user.id;
 	const db = getDb(env.DB);
 
-	const clientsPromise = await db
+	const clients = db
 		.select({
 			id: s.client.id,
 			name: s.client.name,
 			createdAt: s.client.createdAt,
-			editedAt: s.client.updatedAt
+			editedAt: s.client.updatedAt,
+			photoKey: s.client.photoKey
 		})
 		.from(s.client)
 		.where(eq(s.client.userId, userId))
 		.orderBy(asc(s.client.name));
 
-	return { clients: clientsPromise };
+	return { clients: clients };
 };
 
 // export const actions: Actions = {

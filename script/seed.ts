@@ -9,11 +9,11 @@ import { extname, join } from 'node:path';
 
 const ASSETS = fileURLToPath(new URL('../src/lib/assets/', import.meta.url));
 const MIME: Record<string, string> = {
-	'.jpg': 'iamge/jpeg',
-	'.jpeg': 'iamge/jpeg',
-	'.png': 'iamge/png',
-	'.webp': 'iamge/webp',
-	'.gif': 'iamge/gif'
+	'.jpg': 'image/jpeg',
+	'.jpeg': 'image/jpeg',
+	'.png': 'image/png',
+	'.webp': 'image/webp',
+	'.gif': 'image/gif'
 };
 async function clearBucket(bucket: R2Bucket) {
 	let cursor: string | undefined;
